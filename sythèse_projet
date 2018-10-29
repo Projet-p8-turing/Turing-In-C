@@ -1,0 +1,11 @@
+ruban :
+	fonction qui regarde si état courant plus loin que le max du ruban. Si oui, taille ++ (ou *2) -> boucle si capacité bonne, on continue sinon on appelle cette fonction Initialisé avec un fopen -> le code en Turing
+
+tete de lecture :
+	fonction qui prend en argument un indice du tableau. Contenu de cette case 0 -> action, contenu case 1
+	boucle while (not condition finale), deux sens (et que vers +l'infini donc si l'indice vaut 0, cas d'arret)
+
+registre d'état courant :
+	tableau vide dans lequel on ecrit a chauqe lecture
+
+fonction qui lit le fichier et en tire les règles et le ruban
