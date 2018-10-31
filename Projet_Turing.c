@@ -1,4 +1,4 @@
-//                        ****** Zone Nicolas ******                        //
+/*                        ****** Zone Nicolas ******                        */
 #include<stdio.h>
 #include<stdlib.h>
 #define TAILLEMAX 10000
@@ -24,25 +24,24 @@ void init (char * file_name){
 
 
 
-
-//                       ****** Zone Katy ******                       //
-
-
-
-
-
-
-//dllddl
+/*                       ****** Zone Katy ******                       */
 
 
 
 
 
 
-//                        ****** Main ******                        //
+
+
+
+
+
+
+
+/*                        ****** Main ******                        */
 
 
 int main (int argc, char *argv[]){
 	init(argv[1]);
 	return 0;
-}
+}	
