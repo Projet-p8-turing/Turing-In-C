@@ -17,7 +17,7 @@ void init (char * file_name){
 }
 
 
-
+// attention deux fichiers .tm a passer : le ruban et les règles
 
 
 
