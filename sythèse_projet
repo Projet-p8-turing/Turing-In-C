@@ -6,6 +6,6 @@ tete de lecture :
 	boucle while (not condition finale), deux sens (et que vers +l'infini donc si l'indice vaut 0, cas d'arret)
 
 registre d'état courant :
-	tableau vide dans lequel on ecrit a chauqe lecture
+	tableau vide dans lequel on ecrit a chaque lecture
 
 fonction qui lit le fichier et en tire les règles et le ruban
