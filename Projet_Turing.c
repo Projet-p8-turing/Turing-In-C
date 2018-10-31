@@ -18,6 +18,10 @@ void init (char * file_name){
 
 
 
+int main (int argc, char *argv[]){
+	init(argv[1]);
+	return 0;
+}
 
 
 
@@ -41,10 +45,3 @@ void init (char * file_name){
 
 
 //                        ****** Main ******                        //
-
-
-
-int main (int argc, char *argv[]){
-	init(argv[1]);
-	return 0;
-}
