@@ -54,10 +54,9 @@ char * size_increase (char * init_tape){
 
 
 int main (int argc, char *argv[]){
-	char *init_tape; 
-	int head_pos = 0;
-	init_tape = init(argv[1]);
-	size_increase(init_tape);
-	printf("%c \n", init_tape[1]);
+	char *init_tape; // pointeur tableau état initial
+	int head_pos = 0;//position tete de lecture
+	init_tape = init(argv[1]);//  init de l'état initial
+	size_increase(init_tape); // test pour augmenter la taille du ruban
 	return 0;
 }	
