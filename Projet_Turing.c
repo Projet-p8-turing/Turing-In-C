@@ -20,16 +20,13 @@ void init (char * file_name){
 	if (file == NULL){
 		printf("Error loading the file %s . Does it exist ?\n", file_name); //fichier pas chargé...
 	}else {
-		int init_tape[TAILLEMAX];
+		char init_tape[TAILLEMAX];
+		printf("Initial State is : ");
 		for (int i = 0; (fgetc(file) != EOF); i++){
-			init_tape[i] = binary_convertor(fgetc(file));
-			printf("%d \n", init_tape[i] );
+			init_tape[i] = fgetc(file);
+			printf("%c ", init_tape[i] );
 		}
-
-
-
-		//fgets(init_tape, TAILLEMAX, file); //lis la première ligne et la stocke dans init_tape
-		//printf("%s \n", init_tape);
+		printf("\n");
 	}
 	
 }
