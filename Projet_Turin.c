@@ -4,7 +4,7 @@
 #define TAILLEMAX 2000
 
 
-void init (char * file_name){
+char * init (char * file_name){
 	FILE * file;
 	int i, nb, taille;
 	char init_tape[TAILLEMAX], c;
