@@ -9,3 +9,10 @@ registre d'état courant :
 	tableau vide dans lequel on ecrit a chaque lecture
 
 fonction qui lit le fichier et en tire les règles et le ruban
+
+
+
+
+
+regles :
+structure avec cur_symb, move, nxt_symb, nxt_state. 
