@@ -13,14 +13,16 @@ typedef struct rule rule;
 
 struct vect {
 	int nb_elem;
-	float * p;
+	char * p;
 };
 typedef struct vect vect;
 
-void * init (char * file_tape){ //return un char
+vect init (char * file_tape){ //return un char
 	FILE * file;
 	int i, taille;
 	char init_tape[TAILLEMAX], c;
+	vect output_tape;
+
 	file = fopen(file_tape, "r"); //charge le fichier
 	if (file == NULL){
 		printf("Error loading the file %s. Does it exist ?\n", file_tape); //fichier pas chargé...
@@ -33,11 +35,16 @@ void * init (char * file_tape){ //return un char
 			fseek(file, 0L, SEEK_CUR);
 			init_tape[i] = c;
 		}
+		printf("Entered inital tape is : ");
 		for(i = 0; i < taille; i++){
-			printf(" Entered initial tape is : %c \n", init_tape[i]);
+			printf("%c ", init_tape[i]);
 		}
+		printf("\n");
 		fclose(file);
 	}
+	output_tape.nb_elem = i+1;
+	output_tape.p = malloc(sizeof(init_tape));
+	return output_tape;
 }	
 
 char size_increase (char * init_tape){
@@ -53,22 +60,23 @@ char size_increase (char * init_tape){
 vect rule_generator (char * file_rule){
 	FILE * file;
 	file = fopen(file_rule, "r");
-	vect retour;
+	vect output_rules;
 	int line_number = 0;
 	char tmp;
+	rule rule_list[line_number];
+	int ligne;
 
 	for(tmp = getc(file); tmp != EOF; tmp = getc(file)){
 		if ( tmp == '\n')
 			line_number++;
 	}
-	rule rule_list[line_number]; // faire un malloc. renvoyer une structure vect contenant le nb d'element de rule_list et son adresse
-	
-	retour.nb_elem = line_number;
-	retour.p = malloc(line_number*sizeof(rule));
-	for (int ligne = 1; ligne < line_number; ligne++ ){
+	output_rules.nb_elem = line_number;
+	output_rules.p = malloc(line_number*sizeof(rule));
+	for (ligne = 1; ligne < line_number; ligne++ ){
 		fscanf(file, "%d %d %d %d %d", &rule_list[ligne].cur_state, &rule_list[ligne].symbol, &rule_list[ligne].new_symbol, &rule_list[ligne].direction, &rule_list[ligne].new_state);
 	}
-	return retour;
+	fclose(file);
+	return output_rules;
 }
 
 /*                       ****** Zone Katy ******                       */
@@ -90,8 +98,9 @@ vect rule_generator (char * file_rule){
 
 int main (int argc, char *argv[]){
 	//int head_pos = 0;//position tete de lecture
-	char * init_tape = init(argv[1]);//  init de l'état initial
+	vect init_tape = init(argv[1]);//  init de l'état initial
 	vect rule_list = rule_generator(argv[2]);
+	printf("%1s \n", &rule_list.p[1]);
 	//size_increase(init_tape); // test pour augmenter la taille du ruban fais un segfault
 	return 0;
 }	
