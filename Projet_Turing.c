@@ -13,7 +13,7 @@ typedef struct rule rule;
 
 struct vect {
 	int nb_elem;
-	char * p;
+	float *p;
 };
 typedef struct vect vect;
 
@@ -100,7 +100,7 @@ int main (int argc, char *argv[]){
 	//int head_pos = 0;//position tete de lecture
 	vect init_tape = init(argv[1]);//  init de l'état initial
 	vect rule_list = rule_generator(argv[2]);
-	printf("%1s \n", &rule_list.p[1]);
+	printf("%c \n", rule_list.p[1].symbol);
 	//size_increase(init_tape); // test pour augmenter la taille du ruban fais un segfault
 	return 0;
 }	
