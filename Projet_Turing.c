@@ -1,6 +1,7 @@
 /*                        ****** Zone Nicolas ******                        */
 #include<stdio.h>
 #include<stdlib.h>
+#include<assert.h>
 #define TAILLEMAX 2000
 struct rule {
 	int cur_state;
@@ -13,7 +14,7 @@ typedef struct rule rule;
 
 struct vect {
 	int nb_elem;
-	float *p;
+	rule *p;
 };
 typedef struct vect vect;
 
@@ -55,25 +56,26 @@ char size_increase (char * init_tape){
 	}
 	return * tmp;
 }
-// attention deux fichiers .tm a passer : le ruban et les règles. Tout input DOIT ETRE BINAIRE -> convertir
 
 vect rule_generator (char * file_rule){
+	int line_number = 0;
+	int ligne;
+	char tmp;
+	vect output_rules;
 	FILE * file;
 	file = fopen(file_rule, "r");
-	vect output_rules;
-	int line_number = 0;
-	char tmp;
-	rule rule_list[line_number];
-	int ligne;
 
 	for(tmp = getc(file); tmp != EOF; tmp = getc(file)){
 		if ( tmp == '\n')
 			line_number++;
 	}
-	output_rules.nb_elem = line_number;
 	output_rules.p = malloc(line_number*sizeof(rule));
-	for (ligne = 1; ligne < line_number; ligne++ ){
-		fscanf(file, "%d %d %d %d %d", &rule_list[ligne].cur_state, &rule_list[ligne].symbol, &rule_list[ligne].new_symbol, &rule_list[ligne].direction, &rule_list[ligne].new_state);
+	assert(output_rules.p);
+	output_rules.nb_elem = line_number;
+	rewind(file);
+	for (ligne = 0; ligne < line_number; ligne++ ){
+		fscanf(file, "%d %d %d %d %d", &output_rules.p[ligne].cur_state, &output_rules.p[ligne].symbol, &output_rules.p[ligne].new_symbol, &output_rules.p[ligne].direction, &output_rules.p[ligne].new_state);
+		printf("put %d in cur_state\n", output_rules.p[ligne].direction );
 	}
 	fclose(file);
 	return output_rules;
@@ -100,7 +102,7 @@ int main (int argc, char *argv[]){
 	//int head_pos = 0;//position tete de lecture
 	vect init_tape = init(argv[1]);//  init de l'état initial
 	vect rule_list = rule_generator(argv[2]);
-	printf("%c \n", rule_list.p[1].symbol);
+	printf("symbole : %d \n", rule_list.p[1].symbol);
 	//size_increase(init_tape); // test pour augmenter la taille du ruban fais un segfault
 	return 0;
 }	
