@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
+#include<unistd.h>
 #define TAILLEMAX 2000
 struct rule {
 	int cur_state;
@@ -44,11 +45,6 @@ vect_tape init (char * file_tape){ //return un char
 			fseek(file, 0L, SEEK_CUR);
 			output_tape.p[i] = atoi(&c);
 		}
-		printf("Entered inital tape is (in init): ");
-		for(i = 0; i < taille; i++){
-			printf("%d ", output_tape.p[i]);
-		}
-		printf("\n");
 		output_tape.nb_elem = i+1;
 	}
 	fclose(file);
@@ -87,6 +83,39 @@ vect_rule rule_generator (char * file_rule){
 	return output_rules;
 }
 
+int turing_machine (vect_tape init_tape, vect_rule rule_list, int cur_state){
+	int head_pos;
+	char rule_found;
+
+	head_pos = 0;
+
+	while(1){
+		rule_found = 0;
+		for (int i = 0; i < rule_list.nb_elem; i++){
+			if (cur_state == rule_list.p[i].cur_state && init_tape.p[head_pos] == rule_list.p[i].symbol){
+				rule_found = 1;
+				init_tape.p[head_pos] = rule_list.p[i].new_symbol;
+				if (rule_list.p[i].direction)
+					head_pos++;
+				else
+					head_pos--;
+				cur_state = rule_list.p[i].new_state;
+				break;
+			}
+		}
+		printf("%d \n", rule_found);
+		if(!rule_found)
+			return 0; // On a fini
+		printf("initial tape is (in main) : ");
+		for (int n = 0; n < 7; n ++){
+			printf("%d ", init_tape.p[n]);
+		};
+		printf("\n");
+		//sleep(1);
+	}
+
+
+}
 
 /*                       ****** Zone Katy ******                       */
 
@@ -97,13 +126,19 @@ vect_rule rule_generator (char * file_rule){
 
 
 int main (int argc, char *argv[]){
+	if (argc != 4 ){
+		printf("Usage : %s tape_file rule_file initial_state \n", argv[0]);
+		exit(0);
+	}
 	vect_tape init_tape = init(argv[1]);//  init de l'état initial
-	printf("initial tape is (in main) : \n");
+	printf("initial tape is (in main) : ");
 	for (int n = 0; n < 7; n ++){
 		printf("%d ", init_tape.p[n]);
-	}
-	//printf("\n %d ", init_tape.p[1]);
+	};
+	printf("\n");
 	vect_rule rule_list = rule_generator(argv[2]); //acceder avec rule_list.p[numéro de regles].champ
-	//printf("%d \n",rule_list.p[0].symbol );
+
+	turing_machine(init_tape, rule_list, atoi(argv[3]));
+
 	return 0;
 }
