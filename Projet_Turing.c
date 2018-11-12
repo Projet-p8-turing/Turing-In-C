@@ -31,7 +31,7 @@ vect_tape init (char * file_tape){ //return un char
 	char init_tape[TAILLEMAX], c;
 	vect_tape output_tape;
 	
-	output_tape.p = malloc(sizeof(init_tape));
+	//output_tape.p = malloc(sizeof(init_tape));
 	
 	file = fopen(file_tape, "r"); //charge le fichier
 	if (file == NULL){
@@ -43,9 +43,15 @@ vect_tape init (char * file_tape){ //return un char
 		for (i =0; i < taille; i ++){
 			fscanf(file, "%c", &c);
 			fseek(file, 0L, SEEK_CUR);
-			output_tape.p[i] = atoi(&c);
-		}
+			init_tape[i] = atoi(&c);
+
+			//output_tape.p[i] = atoi(&c);
+		}	
 		output_tape.nb_elem = i+1;
+		output_tape.p = malloc(output_tape.nb_elem * sizeof(char));
+		for(i = 0; i < output_tape.nb_elem; i++){
+			output_tape.p[i] = init_tape[i];
+		}
 	}
 	fclose(file);
 	return output_tape;
@@ -75,7 +81,7 @@ vect_rule rule_generator (char * file_rule){
 	output_rules.p = malloc(line_number*sizeof(rule));
 	assert(output_rules.p);
 	output_rules.nb_elem = line_number;
-	rewind(file);
+	fseek(file, 0, SEEK_SET);
 	for (ligne = 0; ligne < line_number; ligne++ ){
 		fscanf(file, "%d %d %d %d %d", &output_rules.p[ligne].cur_state, &output_rules.p[ligne].symbol, &output_rules.p[ligne].new_symbol, &output_rules.p[ligne].direction, &output_rules.p[ligne].new_state);
 	}
@@ -90,6 +96,7 @@ int turing_machine (vect_tape init_tape, vect_rule rule_list, int cur_state){
 	head_pos = 0;
 
 	while(1){
+		sleep(1);
 		rule_found = 0;
 		for (int i = 0; i < rule_list.nb_elem; i++){
 			if (cur_state == rule_list.p[i].cur_state && init_tape.p[head_pos] == rule_list.p[i].symbol){
@@ -111,7 +118,6 @@ int turing_machine (vect_tape init_tape, vect_rule rule_list, int cur_state){
 			printf("%d ", init_tape.p[n]);
 		};
 		printf("\n");
-		//sleep(1);
 	}
 
 
