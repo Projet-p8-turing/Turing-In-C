@@ -109,6 +109,7 @@ int turing_machine (vect_tape init_tape, vect_rule rule_list, int cur_state, int
 			return 0; // si aucune règle n'est trouvée pour l'état spécifié, sortie de programme.
 		}
 		if (verbose == 1){
+			printf("state is : %d \n", cur_state);
 			printf("current tape is : "); // affichage de la situation
 			for (int n = 0; n < init_tape.nb_elem-1; n ++){
 				printf("%d ", init_tape.p[n]);
@@ -136,7 +137,7 @@ int main (int argc, char *argv[]){
 	else
 		verbose = 0;
 	init_tape = init(argv[1]); // recupération du ruban demandé
-	if (argc < 4|| !strcmp(argv[1], "-help")){ //  A CHANGER
+	if (argc < 4|| argc > 5 || !strcmp(argv[1], "-help")){
 		printf("Usage : %s tape_file rule_file initial_state \n\nRule must be pattern : current_state found_symbol new_symbol movement_direction(where 0 is left and 1 is right) new_state WITH SPACES. \nTape pattern must be a a chain of boolean numbers not separated by anything. \nHead starting position is at the begining of tape. The machine will end anytime it detects a symbol for which it doesn't know any rule to apply.\n", argv[0]);
 		exit(0);
 	}
