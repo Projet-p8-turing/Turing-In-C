@@ -59,9 +59,16 @@ Au besoin, le code du projet est consultable \href{https://github.com/Projet-p8-
 \chapter{Listing du programme}
 \section{Squelette des fonctions et répartition des roles}
 \subsection{Fonction init}
-\lstinputlisting[language=c, firstline= 30, lastline =31]{Turing-In-C/Projet_Turing_legoueix.c}
+\begin{lstlisting}[language=c]
+vect_tape init (char * file_tape)
+\end{lstlisting}
 La focntion init prend en argument \textit{char * file\_tape}, c'est a dire le premier argument passé au main, c'est a dire le fichier contenant le ruban initial.\\
-\lstinputlisting[language=c, firstline =38, lastline =38]{Turing-In-C/Projet_Turing_legoueix.c}
+\begin{lstlisting}[language=c]
+file = fopen(file_tape, "r"); 
+	if (file == NULL){ 
+		printf("Error loading the file : %s. Either it was missplled or it does not exist.\n", file_tape); 
+		exit(0);
+\end{lstlisting}
 Ce fichier est ensuite ouvert. Si l'ouverture se passe mal, on en informe l'utilisateur et on l'invite a vérifier le nom du fichier. On vérifie ensuite si il es vide.\\
 \begin{lstlisting}[language=c]
         fseek(file, 0L, SEEK_END);
@@ -225,4 +232,7 @@ Voici un exemple d'utilisation sans verbose, pour une incrémentation binaire :\
 Et un autre, toujours une incrémentation binaire, avec verbose. :
 
 \includegraphics[scale=1.9]{screen2.png}
+
+\chapter{Code complet}
+\lstinputlisting[language=c]{Projet_Turing.c}
 \end{document}

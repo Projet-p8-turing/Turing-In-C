@@ -85,11 +85,30 @@ vect_rule rule_generator (char * file_rule){
 	return output_rules;
 }
 
+
+vect_tape size_increase(vect_tape init_tape){
+	int i;
+	vect_tape output;
+
+	output.nb_elem = TAILLEMAX*2; 
+	output.p = malloc(output.nb_elem * sizeof(char));
+	for( i = 0; i<(TAILLEMAX *2); i++){
+		output.p[i] = init_tape.p[i];
+	}
+	return output;
+}
+
+
+
 int turing_machine (vect_tape init_tape, vect_rule rule_list, int cur_state, int verbose){
 	int head_pos, i, n;
 	char rule_found;
 	head_pos = 5;
 	while(1){
+		
+		if(head_pos == TAILLEMAX)	// pour ruban infini
+			init_tape = size_increase(init_tape);
+
 		rule_found = 0;
 		for (i = 0; i < rule_list.nb_elem; i++){ // on compare l'état courrant a toutes les règles connues
 			if (cur_state == rule_list.p[i].cur_state && init_tape.p[head_pos] == rule_list.p[i].symbol){ // si on a une règle pour l'état et le symbole courrant
