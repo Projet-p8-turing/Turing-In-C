@@ -35,11 +35,11 @@ vect_tape init (char * file_tape){
 	vect_tape output_tape;
 	
 	memset(init_tape, 2, TAILLEMAX);
-	file = fopen(file_tape, "r"); //charge le fichier
-	if (file == NULL){   // traitement si erreur de chargement
+	file = fopen(file_tape, "r"); 
+	if (file == NULL){   
 		printf("Error loading the file : %s. Either it was missplled or it does not exist.\n", file_tape); 
 		exit(0);
-	}else { // met chaque caractère trouvé dans un tableau
+	}else {
 		fseek(file, 0L, SEEK_END);
 		taille =ftell(file);
 		if (taille == 0){
@@ -70,7 +70,7 @@ vect_rule rule_generator (char * file_rule){
 	FILE * file;
 	file = fopen(file_rule, "r");
 
-	for(tmp = getc(file); tmp != EOF; tmp = getc(file)){ // recupère le nombre de lignes (donc de règles) dans le fichier
+	for(tmp = getc(file); tmp != EOF; tmp = getc(file)){ 
 		if ( tmp == '\n')
 			line_number++;
 	}
@@ -78,7 +78,7 @@ vect_rule rule_generator (char * file_rule){
 	assert(output_rules.p);
 	output_rules.nb_elem = line_number;
 	fseek(file, 0, SEEK_SET);
-	for (ligne = 0; ligne < line_number; ligne++ ){ // chaque 5 élément trouvé forme une règle.
+	for (ligne = 0; ligne < line_number; ligne++ ){
 		fscanf(file, "%d %d %d %d %d", &output_rules.p[ligne].cur_state, &output_rules.p[ligne].symbol, &output_rules.p[ligne].new_symbol, &output_rules.p[ligne].direction, &output_rules.p[ligne].new_state);
 	}
 	fclose(file);
@@ -107,19 +107,19 @@ int turing_machine (vect_tape init_tape, vect_rule rule_list, int cur_state, int
 	head_pos = 5;
 	while(1){
 		
-		if(head_pos == TAILLEMAX)	// pour ruban infini
+		if(head_pos == TAILLEMAX)
 			init_tape = size_increase(init_tape);
 
 		rule_found = 0;
-		for (i = 0; i < rule_list.nb_elem; i++){ // on compare l'état courrant a toutes les règles connues
-			if (cur_state == rule_list.p[i].cur_state && init_tape.p[head_pos] == rule_list.p[i].symbol){ // si on a une règle pour l'état et le symbole courrant
+		for (i = 0; i < rule_list.nb_elem; i++){ 
+			if (cur_state == rule_list.p[i].cur_state && init_tape.p[head_pos] == rule_list.p[i].symbol){ 
 				rule_found = 1;
 				init_tape.p[head_pos] = rule_list.p[i].new_symbol;
-				if (rule_list.p[i].direction) // pour déplacement droite
+				if (rule_list.p[i].direction) 
 					head_pos++;
-				else	// pour déplacement gauche
+				else
 					head_pos--;
-				cur_state = rule_list.p[i].new_state; //nouvel état
+				cur_state = rule_list.p[i].new_state;
 				break;
 			}
 		}
@@ -134,11 +134,11 @@ int turing_machine (vect_tape init_tape, vect_rule rule_list, int cur_state, int
 				printf("%d ", init_tape.p[n+5]);
 			};
 			printf("\n");
-			return 0; // si aucune règle n'est trouvée pour l'état spécifié, sortie de programme.
+			return 0;
 		}
 		if (verbose == 1){
 			printf("state is : %d. Head is at position %d \n", cur_state, head_pos);
-			printf("current tape is : "); // affichage de la situation
+			printf("current tape is : ");
 			for(int n = 5; n > 0; n--){
 				if (init_tape.p[n-1] == 1)
 					printf("%d ", init_tape.p[n-1]);
@@ -150,14 +150,6 @@ int turing_machine (vect_tape init_tape, vect_rule rule_list, int cur_state, int
 		}
 	}
 }
-
-/*                       ****** Zone Katy ******                       */
-
-
-
-
-/*                        ****** Main ******                        */
-
 
 int main (int argc, char *argv[]){
 	int verbose, n;
@@ -174,14 +166,14 @@ int main (int argc, char *argv[]){
 		printf("Usage : %s <tape_file> <rule_file> <initial_state> <-v> (last argument is optional and enables verbose mode)\n\nRule pattern must be : current_state found_symbol new_symbol movement_direction(where 0 is left and 1 is right) new_state WITH SPACES. \nTape pattern must be a a chain of boolean numbers not separated by anything. The \'2\' symbol will represent blank spaces, rules must be set accordingly. \n\nHead starting position is at the begining of tape. The machine will halt anytime it detects a symbol for which it doesn't know any rule to apply.\n", argv[0]);
 		exit(0);
 	}
-	init_tape = init(argv[1]); // recupération du ruban demandé
+	init_tape = init(argv[1]); 
 	printf("initial call done with : ");
-	for (n = 0; n <= init_tape.nb_elem-2; n ++){ //affiche le ruban inital
+	for (n = 0; n <= init_tape.nb_elem-2; n ++){
 		printf("%d ", init_tape.p[n+5]);
 	};
 	printf("\n");
-	rule_list = rule_generator(argv[2]); // recupération des règles de traitement
+	rule_list = rule_generator(argv[2]);
 	printf("Processing...\n\n");
-	turing_machine(init_tape, rule_list, atoi(argv[3]), verbose); // processing
+	turing_machine(init_tape, rule_list, atoi(argv[3]), verbose); 
 	return 0;
 }

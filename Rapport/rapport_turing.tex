@@ -5,7 +5,6 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{authblk}
-
 \usepackage{hyperref}
 \usepackage{listings, graphicx}
 \usepackage{color, hyperref}
@@ -111,6 +110,21 @@ fseek(file, 0, SEEK_SET);
 \end{lstlisting}
 On lit alors le fichier une seconde fois, a la recherche d'une suite de 5 int (soit une règle) autant de fois qu'on a compté de lignes.\\
 Le vecteur \textit{output\_rules} est finalement retourné.
+\subsection{Fonction size\_increase}
+\begin{lstlisting}[language=c]
+vect_tape size_increase(vect_tape init_tape)
+\end{lstlisting}
+Cette fonction sera appellée par \textit{turing\_machine} si la tête de lecture dépasse la taille actuelle du ruban. On obtiens alors un ruban virtuellement infini.
+\begin{lstlisting}[language=c]
+utput.nb_elem = TAILLEMAX*2; 
+output.p = malloc(output.nb_elem * sizeof(char));
+for( i = 0; i<(TAILLEMAX *2); i++){
+	output.p[i] = init_tape.p[i];
+}
+free(init_tape.p);
+return output;
+\end{lstlisting}
+On créé un nouveau vecteur 2 fois plus grand dans lequel on recopie le vecteur précédant. Celui ci est retourné après avoir libèré la mémoire "inutile" réservée par l'ancien vecteur.
 \subsection{Fonction turing\_machine}
 \begin{lstlisting}[language=c]
 int turing_machine (vect_tape init_tape, vect_rule rule_list, int cur_state, int verbose){
@@ -202,6 +216,7 @@ Après avoir récupèré le ruban initial en appellant \textit{init()}, on infor
 \begin{itemize}
 \item \textit{init} a été codée par Nicolas LEGOUEIX
 \item \textit{rule\_generator} a été codée par Nicolas LEGOUEIX
+\item \textit{size\_increase} a été codée par Nicolas LEGOUEIX
 \item \textit{turing\_machine} a été codée par Nicolas LEGOUEIX
 \item \textit{main} a été codée par Nicolas LEGOUEIX
 \end{itemize}
