@@ -1,5 +1,5 @@
 cc=gcc
-SRC= main.c init.c rule_generator.c turing_machine.c
+SRC= main.c init.c rule_generator.c turing_machine.c size_increase.c
 OBJ = $(SRC: .c = .o)
 CFLAGS= -Wall
 
