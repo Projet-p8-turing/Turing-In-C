@@ -126,7 +126,7 @@ int turing_machine (vect_tape init_tape, vect_rule rule_list, int cur_state, int
 		if(!rule_found){
 			printf("\nNo rule found for the current state : %d , job is done.", cur_state);
 			printf("\nExited with :\n");
-			for(int n = 5; n > 0; n--){
+			for(n = 5; n > 0; n--){
 				if (init_tape.p[n-1] == 1)
 					printf("%d ", init_tape.p[n-1]);
 			}
@@ -139,11 +139,11 @@ int turing_machine (vect_tape init_tape, vect_rule rule_list, int cur_state, int
 		if (verbose == 1){
 			printf("state is : %d. Head is at position %d \n", cur_state, head_pos);
 			printf("current tape is : "); // affichage de la situation
-			for(int n = 5; n > 0; n--){
+			for(n = 5; n > 0; n--){
 				if (init_tape.p[n-1] == 1)
 					printf("%d ", init_tape.p[n-1]);
 			}
-			for (int n = 0; n < init_tape.nb_elem-1; n ++){
+			for (n = 0; n < init_tape.nb_elem-1; n ++){
 				printf("%d ", init_tape.p[n+5]);
 			};
 			printf("\n");
