@@ -1,0 +1,26 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{authblk}
+\usepackage{hyperref}
+\usepackage{listings, graphicx, spverbatim}
+\usepackage{color, hyperref}
+%\usepackage{spverbatim}
+\usepackage{tcolorbox}
+
+\usepackage{amsmath}  % for \hookrightarrow
+\usepackage{xcolor}   % for \textcolor
+
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\lstinputlisting{Projet_Turing.c}
+\end{document}
